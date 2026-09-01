@@ -1,0 +1,318 @@
+:root {
+  --mc-green: #3c8527;
+  --mc-green-hover: #4ea833;
+  --mc-green-active: #255716;
+  --mc-green-glow: rgba(78, 168, 51, 0.45);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #050507;
+  color: #ffffff;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 全螢幕三欄手風琴 */
+.split-launcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100vw;
+  height: 100vh;
+  transition: grid-template-columns 0.65s var(--ease-cinematic);
+  will-change: grid-template-columns;
+  background-color: #000;
+}
+
+.split-launcher:has(.version-panel:nth-child(1):hover) {
+  grid-template-columns: 2.2fr 0.9fr 0.9fr;
+}
+.split-launcher:has(.version-panel:nth-child(2):hover) {
+  grid-template-columns: 0.9fr 2.2fr 0.9fr;
+}
+.split-launcher:has(.version-panel:nth-child(3):hover) {
+  grid-template-columns: 0.9fr 0.9fr 2.2fr;
+}
+
+.version-panel {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  border-right: 2px solid rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transform: translateZ(0);
+}
+
+.version-panel:last-child {
+  border-right: none;
+}
+
+.panel-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: auto;
+  image-rendering: -webkit-optimize-contrast;
+  filter: brightness(0.65) contrast(1.1) saturate(0.9);
+  transform: scale(1.02) translateZ(0);
+  transition: transform 0.8s var(--ease-cinematic), filter 0.6s ease;
+  will-change: transform, filter;
+  z-index: 1;
+}
+
+.panel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 8, 0.15) 0%,
+    rgba(5, 5, 8, 0.4) 45%,
+    rgba(5, 5, 8, 0.92) 100%
+  );
+  z-index: 2;
+  transition: background 0.6s ease;
+}
+
+.version-panel:hover .panel-bg {
+  filter: brightness(1) contrast(1.15) saturate(1.2);
+  transform: scale(1.08) translateZ(0);
+}
+
+.version-panel:hover .panel-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 8, 0.05) 0%,
+    rgba(5, 5, 8, 0.25) 40%,
+    rgba(5, 5, 8, 0.85) 100%
+  );
+}
+
+.panel-content {
+  position: relative;
+  z-index: 10;
+  padding: 44px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(16px) translateZ(0);
+  transition: transform 0.5s var(--ease-cinematic);
+  will-change: transform;
+}
+
+.version-panel:hover .panel-content {
+  transform: translateY(0) translateZ(0);
+}
+
+.panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.version-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  line-height: 1.2;
+}
+
+.version-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #d1d1de;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.play-btn-wrapper {
+  margin-top: 8px;
+}
+
+.mc-play-btn {
+  width: 100%;
+  max-width: 320px;
+  background-color: var(--mc-green);
+  color: #ffffff;
+  border: 2px solid #5bb33b;
+  border-bottom: 4px solid #1e4d12;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.6);
+  position: relative;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.mc-play-btn:hover {
+  background-color: var(--mc-green-hover);
+  border-color: #6ed149;
+  box-shadow: 0 0 30px var(--mc-green-glow);
+}
+
+.mc-play-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+  background-color: var(--mc-green-active);
+}
+
+/* 彈窗遮罩與通用樣式 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #141417;
+  border: 1px solid #2f2f38;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  width: 90%;
+  max-width: 560px;
+  padding: 30px;
+  transform: scale(0.95);
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.modal-overlay.active .modal-box {
+  transform: scale(1);
+}
+
+.modal-box h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #55ff55;
+  border-bottom: 1px solid #262630;
+  padding-bottom: 10px;
+}
+
+.modal-desc-box {
+  color: #d1d1de;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+  white-space: pre-line;
+  text-align: left;
+  background: #09090c;
+  padding: 16px;
+  border: 1px solid #202026;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-close-btn {
+  background: #24242c;
+  border: 1px solid #3d3d49;
+  color: #fff;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #363642;
+  border-color: #555566;
+}
+
+/* 進入遊戲動作綠色按鈕 */
+.launch-action-btn {
+  background: var(--mc-green) !important;
+  border: 1px solid #5bb33b !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 15px rgba(60, 133, 39, 0.4);
+}
+
+.launch-action-btn:hover {
+  background: var(--mc-green-hover) !important;
+  border-color: #6ed149 !important;
+  box-shadow: 0 0 25px rgba(78, 168, 51, 0.6);
+}
+
+/* 安全提醒專用樣式 */
+.notice-box {
+  max-width: 480px;
+  text-align: center;
+  border: 1px solid #5a3d1c;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 170, 0, 0.15);
+}
+
+.notice-icon {
+  font-size: 36px;
+  color: #ffaa00;
+  margin-bottom: 12px;
+}
+
+.notice-title {
+  color: #ffaa00 !important;
+  border-bottom-color: #382915 !important;
+  font-size: 20px;
+}
+
+.notice-desc {
+  text-align: center;
+  font-size: 15px;
+  color: #e2e2ea;
+  border-color: #382915;
+  background: #110e0a;
+}
+
+.notice-btn {
+  background: #ffaa00;
+  color: #000;
+  border: 1px solid #ffcc66;
+  font-weight: 700;
+}
+
+.notice-btn:hover {
+  background: #ffbb33;
+  border-color: #fff;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Eaglercraft Launcher</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- 網頁進入時的提示視窗 (免費子網域安全提醒) -->
+  <div class="modal-overlay" id="noticeModal">
+    <div class="modal-box notice-box">
+      <div class="notice-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <h3 class="notice-title">訪客安全提醒</h3>
+      <div class="modal-desc-box notice-desc">
+        因為我們沒錢買網域 所以目前使用的是免費子網域服務 如果你下次到訪此網頁時發現是甚麼怪怪的網頁 請立刻關閉
+      </div>
+      <div class="modal-actions" style="justify-content: center;">
+        <button class="modal-close-btn notice-btn" onclick="closeNoticeModal()">我瞭解了，進入網站</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全螢幕三欄沉浸式手風琴 -->
+  <div class="split-launcher">
+    <!-- Panel 1: 1.20.6 Trails & Tales -->
+    <div class="version-panel" id="panel-120">
+      <img class="panel-bg" src="images/Trails_And_Tales_Header.webp" alt="1.20.6 Trails and Tales">
+      <div class="panel-overlay"></div>
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2 class="version-title">1.20.6</h2>
+          <span class="version-subtitle">Trails & Tales</span>
+        </div>
+        <div class="play-btn-wrapper">
+          <button class="mc-play-btn" onclick="launchGame('1.20.6')">
+            <i class="fa-solid fa-play"></i> 遊玩 1.20.6
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: 1.21.11 Mounts of Mayhem -->
+    <div class="version-panel" id="panel-121">
+      <img class="panel-bg" src="images/MCV_MountsOfMayhem_Launch_editorial_1170x500.jpg" alt="1.21.11 Mounts of Mayhem">
+      <div class="panel-overlay"></div>
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2 class="version-title">1.21.11</h2>
+          <span class="version-subtitle">Mounts of Mayhem</span>
+        </div>
+        <div class="play-btn-wrapper">
+          <button class="mc-play-btn" onclick="launchGame('1.21.11')">
+            <i class="fa-solid fa-play"></i> 遊玩 1.21.11
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: 26.2 Chaos Cubed (最新版本) -->
+    <div class="version-panel" id="panel-262">
+      <img class="panel-bg" src="images/1200px-Chaos_Cubed_Key_Art.webp" alt="26.2 Chaos Cubed">
+      <div class="panel-overlay"></div>
+      <div class="panel-content">
+        <div class="panel-header">
+          <h2 class="version-title">26.2</h2>
+          <span class="version-subtitle">Chaos Cubed (最新版本)</span>
+        </div>
+        <div class="play-btn-wrapper">
+          <button class="mc-play-btn" onclick="launchGame('26.2')">
+            <i class="fa-solid fa-play"></i> 遊玩 26.2
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eaglercraft 啟動須知與導向彈窗 -->
+  <div class="modal-overlay" id="launchModal">
+    <div class="modal-box">
+      <h3 id="modalTitle">啟動須知</h3>
+      <div class="modal-desc-box" id="modalDesc">說明文字...</div>
+      <div class="modal-actions" style="gap: 12px;">
+        <button class="modal-close-btn" onclick="closeModal()">取消</button>
+        <button class="modal-close-btn launch-action-btn" id="launchBtn" onclick="proceedToGame()">進入遊戲</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
